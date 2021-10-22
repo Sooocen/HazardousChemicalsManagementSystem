@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.socen.ws.gen.dao.OfficeZoneMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.socen.ws.gen.entity.OfficeZone">
+        <id column="Office_id" property="officeId"/>
+        <result column="Zone_id" property="zoneId"/>
+    </resultMap>
+
+    <!--根据安监局Id删除该安监局管理区域关系-->
+    <delete id="deleteByOfficeId">
+		DELETE FROM t_office_zone WHERE Office_id = #{officeId}
+	</delete>
+
+    <!--根据区域Id删除与安监局关系-->
+    <delete id="deleteByZoneId">
+		DELETE FROM t_office_zone WHERE Zone_id = #{zoneId}
+	</delete>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.socen.ws.gen.dao.ZoneMapper">
+    <resultMap id="zone" type="com.socen.ws.gen.entity.Zone">
+        <id column="ZONE_ID" jdbcType="DECIMAL" property="zoneId"/>
+        <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId"/>
+        <result column="ZONE_NAME" jdbcType="VARCHAR" property="zoneName"/>
+        <result column="ZONE_NUM" jdbcType="DOUBLE" property="zoneNum"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="POINTS" jdbcType="VARCHAR" property="points"/>
+    </resultMap>
+
+    <select id="findZoneByUsername" resultMap="zone">
+        SELECT z.*
+        FROM t_zone z
+                 LEFT JOIN t_office_zone oz ON (z.zone_id = oz.zone_id)
+                 LEFT JOIN t_user u ON (u.office_id = oz.OFFICE_ID)
+        WHERE u.`USERNAME` = #{username}
+    </select>
+</mapper>

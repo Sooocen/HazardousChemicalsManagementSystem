@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.socen.ws.gen.dao.InspectionReportMapper">
+
+    <resultMap id="BaseResultMap" type="com.socen.ws.gen.entity.InspectionReport">
+        <id column="Report_id" jdbcType="DECIMAL" property="reportId"/>
+        <result column="Company_id" jdbcType="DECIMAL" property="companyId"/>
+        <result column="Office_id" jdbcType="DECIMAL" property="officeId"/>
+        <result column="Report_type" jdbcType="CHAR" property="reportType"/>
+        <result column="Report_self" jdbcType="CHAR" property="reportSelf"/>
+        <result column="Report_person" jdbcType="VARCHAR" property="reportPerson"/>
+        <result column="Report_score" jdbcType="DOUBLE" property="reportScore"/>
+        <result column="Create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <select id="findReports" resultType="InspectionReport">
+        SELECT
+        ir.Report_id reportId,
+        c.company_id companyId,
+        c.company_Name companyName,
+        o.office_id officeId,
+        o.office_Name officeName,
+        ir.Report_type reportType,
+        ir.Report_self reportSelf,
+        ir.Report_person reportPerson,
+        ir.Report_score reportScore,
+        ir.Create_time createTime
+        FROM
+        t_inspection_report ir
+        LEFT JOIN t_company c ON (ir.company_id = c.company_id)
+        LEFT JOIN t_office o ON (ir.office_id = o.office_id)
+        WHERE 1 = 1
+        <if test="report.reportPerson != null and report.reportPerson != ''">
+            AND ir.reportPerson = #{report.reportPerson}
+        </if>
+        <if test="report.createTimeFrom != null and report.createTimeFrom !='' and report.createTimeTo != null and report.createTimeTo !=''">
+            And ir.create_time between #{report.createTimeFrom} and #{report.createTimeTo}
+        </if>
+
+        <if test="report.officeId != null and report.officeId !=''">
+            And ir.office_id = #{report.officeId}
+        </if>
+        <if test="report.companyId != null and report.companyId !=''">
+        And ir.company_id = #{report.companyId}
+        </if>
+        <if test="report.reportSelf != null and report.reportSelf !=''">
+            And ir.report_self = #{report.reportSelf}
+        </if>
+        group by
+        ir.Report_id,
+        c.company_id,
+        c.company_Name,
+        o.office_id,
+        o.office_Name,
+        ir.Report_type,
+        ir.Report_self,
+        ir.Report_person,
+        ir.Report_score,
+        ir.Create_time
+    </select>
+
+    <select id="getMaxId" resultType="Long">
+        select
+            MAX(`Report_id`)
+        from
+        `t_inspection_report`
+    </select>
+</mapper>

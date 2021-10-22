@@ -1,0 +1,7 @@
+2021-10-18 18:54:11.772 ws [main] ERROR c.s.ws.common.runner.CacheInitRunner - 缓存初始化失败，Could not get a resource from the pool
+2021-10-18 18:54:11.772 ws [main] ERROR c.s.ws.common.runner.CacheInitRunner -  ____   __    _   _ 
+2021-10-18 18:54:11.773 ws [main] ERROR c.s.ws.common.runner.CacheInitRunner - | |_   / /\  | | | |
+2021-10-18 18:54:11.773 ws [main] ERROR c.s.ws.common.runner.CacheInitRunner - |_|   /_/--\ |_| |_|__
+2021-10-18 18:54:11.773 ws [main] ERROR c.s.ws.common.runner.CacheInitRunner -                         
+2021-10-18 18:54:11.773 ws [main] ERROR c.s.ws.common.runner.CacheInitRunner - WS启动失败              
+2021-10-18 18:54:11.773 ws [main] ERROR c.s.ws.common.runner.CacheInitRunner - Redis连接异常，请检查Redis连接配置并确保Redis服务已启动

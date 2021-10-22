@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.socen.ws.gen.dao.CompanyMapper">
+    <resultMap id="BaseResultMap" type="com.socen.ws.gen.entity.Company">
+        <id column="COMPANY_ID" jdbcType="DECIMAL" property="companyId"/>
+        <result column="COMPANY_NAME" jdbcType="VARCHAR" property="companyName"/>
+        <result column="UNIFIED_CREDIT_CODE" jdbcType="VARCHAR" property="unifiedCreditCode"/>
+        <result column="COMPANY_ADDR" jdbcType="VARCHAR" property="companyAddr"/>
+        <result column="ZONE_ID" jdbcType="DECIMAL" property="zoneId"/>
+        <result column="OFFICE_ID" jdbcType="DECIMAL" property="officeId"/>
+        <result column="COMPANY_NATURE" jdbcType="VARCHAR" property="companyNature"/>
+        <result column="COMPANY_LEGAL_PERSON" jdbcType="VARCHAR" property="companyLegalPerson"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="COMPANY_TE" jdbcType="VARCHAR" property="companyTe"/>
+        <result column="COMPANY_FAX" jdbcType="VARCHAR" property="companyFax"/>
+        <result column="COMPANY_EMAIL" jdbcType="VARCHAR" property="companyEmail"/>
+        <result column="COMPANY_LICENSE" jdbcType="VARCHAR" property="companyLicense"/>
+        <result column="COMPANY_PEOPLE" jdbcType="INTEGER" property="companyPeople"/>
+        <result column="COMPANY_MEMO" jdbcType="VARCHAR" property="companyMemo"/>
+        <result column="COMPANY_TYPE" jdbcType="CHAR" property="companyType"/>
+        <result column="COMPANY_LON" jdbcType="DOUBLE" property="companyLon"/>
+        <result column="COMPANY_LAT" jdbcType="DOUBLE" property="companyLat"/>
+    </resultMap>
+
+    <select id="findCompanyDetail" resultType="company" parameterType="company">
+        SELECT
+        u.company_id companyId,
+        u.company_name,
+        u.unified_credit_code,
+        u.company_addr,
+        u.company_nature,
+        u.company_legal_person,
+        u.company_te,
+        u.company_fax,
+        u.company_email,
+        u.company_license,
+        u.company_people,
+        u.company_memo,
+        u.company_type,
+        u.company_lon,
+        u.company_lat,
+        u.create_time createTime,
+        u.modify_time modifyTime,
+        d.zone_id zoneId,
+        d.zone_name zoneName,
+        o.office_id officeId,
+        o.office_name officeName,
+        GROUP_CONCAT(r.unit_id) unitId,
+        GROUP_CONCAT(r.unit_name) unitName
+        FROM
+        t_company u
+        LEFT JOIN t_zone d ON (u.zone_id = d.zone_id)
+        LEFT JOIN t_office o ON (u.office_id = o.office_id)
+        LEFT JOIN t_company_unit ur ON (u.company_id = ur.company_id)
+        LEFT JOIN t_inspection_unit r ON r.unit_id = ur.unit_id
+        WHERE 1 = 1
+        <if test="company.companyName != null and company.companyName != ''">
+            AND u.companyName = #{company.companyName}
+        </if>
+        <if test="company.zoneId != null and company.zoneId != ''">
+            AND d.zoneId = #{company.zoneId}
+        </if>
+        <if test="company.officeId != null and company.officeId != ''">
+            AND o.officeId = #{company.officeId}
+        </if>
+        <if test="company.createTimeFrom != null and company.createTimeFrom !=''">
+            And u.create_time &gt; #{company.createTimeFrom}
+        </if>
+        <if test="company.createTimeTo!= null and company.createTimeTo !=''">
+            And u.create_time &lt; #{company.createTimeTo}
+        </if>
+        <if test="company.companyNature != null and company.companyNature != ''">
+            AND u.company_nature = #{company.companyNature}
+        </if>
+        <if test="company.companyType != null and company.companyType != ''">
+            AND u.company_type = #{company.companyType}
+        </if>
+        group by u.company_id,
+        u.company_name,
+        u.unified_credit_code,
+        u.company_addr,
+        u.company_nature,
+        u.company_legal_person,
+        u.company_te,
+        u.company_fax,
+        u.company_email,
+        u.company_license,
+        u.company_people,
+        u.company_memo,
+        u.company_type,
+        u.company_lon,
+        u.company_lat,
+        u.create_time,
+        d.zone_id,
+        d.zone_name,
+        o.office_id,
+        o.office_name
+
+    </select>
+
+    <select id="findCompanyByZonId" resultMap="BaseResultMap" parameterType="String">
+        SELECT c.*
+        FROM t_company c
+        WHERE c.zone_id = #{zoneId}
+    </select>
+</mapper>

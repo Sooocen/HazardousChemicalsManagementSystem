@@ -1,0 +1,28 @@
+{
+  "groups": [
+    {
+      "name": "ws",
+      "type": "com.socen.ws.common.properties.WsProperties",
+      "sourceType": "com.socen.ws.common.properties.WsProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ws.open-aop-log",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.socen.ws.common.properties.WsProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "ws.shiro",
+      "type": "com.socen.ws.common.properties.ShiroProperties",
+      "sourceType": "com.socen.ws.common.properties.WsProperties"
+    },
+    {
+      "name": "ws.swagger",
+      "type": "com.socen.ws.common.properties.SwaggerProperties",
+      "sourceType": "com.socen.ws.common.properties.WsProperties"
+    }
+  ],
+  "hints": []
+}

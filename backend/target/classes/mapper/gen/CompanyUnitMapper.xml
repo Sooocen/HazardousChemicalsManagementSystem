@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.socen.ws.gen.dao.CompanyUnitMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.socen.ws.gen.entity.CompanyUnit">
+        <id column="Company_id" property="companyId"/>
+        <result column="Unit_id" property="unitId"/>
+    </resultMap>
+
+    <!--根据企业Id删除该企业的检查单元关系-->
+    <delete id="deleteByCompanyId">
+		DELETE FROM t_company_unit WHERE Company_id = #{companyId}
+	</delete>
+
+    <!--根据检查单元Id删除该检查单元的企业关系-->
+    <delete id="deleteByUnitId">
+		DELETE FROM t_company_unit WHERE Unit_id = #{unitId}
+	</delete>
+</mapper>
